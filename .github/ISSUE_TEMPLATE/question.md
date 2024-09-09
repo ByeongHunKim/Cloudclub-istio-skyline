@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask a question about this project / 이 프로젝트에 대해 질문하세요
+about: Ask a question / 질문하기
 title: "[Question] "
 labels: question
 assignees: ''
