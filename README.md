@@ -2,7 +2,6 @@
     <h1 align="center">
         Cloud Club
     </h1>
-    <p align="center">Istio Study</p>
 </p>
 
 # Istio study season 1
