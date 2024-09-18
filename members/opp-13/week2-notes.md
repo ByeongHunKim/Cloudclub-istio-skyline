@@ -74,6 +74,8 @@ if [ -f /etc/debian_version ]; then
     sudo apt-get update
     sudo apt-get upgrade -y
 
+    sudo apt-get install curl
+
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 
@@ -82,7 +84,7 @@ if [ -f /etc/debian_version ]; then
 
     # Add Docker's official GPG key:
     sudo apt-get update
-    sudo apt-get install ca-certificates curl
+    sudo apt-get install ca-certificates
     sudo install -m 0755 -d /etc/apt/keyrings
     sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
     sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -105,6 +107,8 @@ if [ -f /etc/debian_version ]; then
     fi
 
     sudo yum update -y
+
+    sudo yum install curl 
 
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
