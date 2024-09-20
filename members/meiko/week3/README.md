@@ -1,0 +1,18 @@
+- Why not use Envoy instead of Istio?
+  - Envoy Proxy is capable of being deployed into many different types of cluster
+  - That means it has a massive and complex [terminology](https://www.envoyproxy.io/docs/envoy/v1.31.2/intro/arch_overview/intro/terminology) of its own
+    - Reverse proxy, terminology 에 대한 이해
+---
+- Istio Simplifies Envoy
+  - Istio understands Kubernetes
+  - We can use regular Kubernetes yaml ( via CRDs ) which get transformed into Envoy configuration
+    - 이 말이 gw,vs,dr 등 custom resource들이 결국엔 실습에서 사용한 envoy config yaml 로 변한다는 말이랑 mesh logic으로 변하는 게 같은 의미인건가?
+    - 맞다면, 모든 envoy proxy는 같은 config를 공유하는 것 인가? 아니면 각자 다른 걸 가지고 있는 건가?
+---
+- Envoy
+  - Envoy is an open source edge and service proxy, designed for cloud native application
+- Envoy Demo
+  - Requirement: set up a component that can receive a standard http request
+  - Technically, this is called a `Reverse Proxy`
+    - Difference: here, the client knows they have called the proxy
+    - The client thinks the results have come from the proxy
