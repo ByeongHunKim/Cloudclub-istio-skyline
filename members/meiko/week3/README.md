@@ -16,3 +16,4 @@
   - Technically, this is called a `Reverse Proxy`
     - Difference: here, the client knows they have called the proxy
     - The client thinks the results have come from the proxy
+- [Istio proxy의 작동원리](https://brunch.co.kr/@growthminder/84)
