@@ -17,3 +17,10 @@
     - Difference: here, the client knows they have called the proxy
     - The client thinks the results have come from the proxy
 - [Istio proxy의 작동원리](https://brunch.co.kr/@growthminder/84)
+  - `$ kubectl label namespace <namespace> istio-injection=enabled` 을 실행 시 webhook을 통해 `istiod`에 `/inject api`를 호출
+  - `istiod` 는 파드에 프록시 컨테이너와 init 컨테이너를 주입
+  - init 컨테이너는 서비스 컨테이너가 생성되기 전에 먼저 작업 수행
+    - istio-iptables 명령어 ( 네트워크 트래픽을 제어하기 위한 iptable 작업)
+    - 해당 iptable 은 파드 내에서 동작하며, 프록시가 트래픽을 가로채기 위한 설정
+  - init 컨테이너를 통해 iptable에 규칙을 추가한 후 istio-proxy 컨테이너 생성
+    - 
