@@ -1,5 +1,8 @@
 # Useful-links
-## 1. [Istio Architecture](https://istio.io/latest/docs/ops/deployment/architecture/)
+
+## 1. Istio docs
+### 1.1 [Istio Architecture](https://istio.io/latest/docs/ops/deployment/architecture/)
+### 1.2 [Istio Traffic Management / Request Routing](https://istio.io/latest/docs/tasks/traffic-management/request-routing/)
 
 ## 2. Istio-Custom-Resources
 ### 2.1 [Gateway](https://istio.io/latest/docs/reference/config/networking/gateway/)
