@@ -10,6 +10,7 @@
 
 ## 3. [Istio-addons](https://github.com/istio/istio/tree/master/samples/addons)
 ### 3.1 [Addon guide](https://bluehorn07.github.io/2024/02/02/install-istio-and-addons/#addon-%EC%84%A4%EC%B9%98-prometheus--kiali)
+### 3.2 [Addon Github](https://github.com/istio/istio/tree/master/samples/addons)
 
 ## 4. k8s knowledge
 ### 4.1 [쓰기만 했던 개발자가 궁금해서 찾아본 쿠버네티스 내부 1편](https://tech.kakaopay.com/post/jack-k8s-internals-part-1/)
