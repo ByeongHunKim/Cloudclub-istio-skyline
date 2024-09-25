@@ -1,0 +1,26 @@
+- Why not use Envoy instead of Istio?
+  - Envoy Proxy is capable of being deployed into many different types of cluster
+  - That means it has a massive and complex [terminology](https://www.envoyproxy.io/docs/envoy/v1.31.2/intro/arch_overview/intro/terminology) of its own
+    - Reverse proxy, terminology 에 대한 이해
+---
+- Istio Simplifies Envoy
+  - Istio understands Kubernetes
+  - We can use regular Kubernetes yaml ( via CRDs ) which get transformed into Envoy configuration
+    - 이 말이 gw,vs,dr 등 custom resource들이 결국엔 실습에서 사용한 envoy config yaml 로 변한다는 말이랑 mesh logic으로 변하는 게 같은 의미인건가?
+    - 맞다면, 모든 envoy proxy는 같은 config를 공유하는 것 인가? 아니면 각자 다른 걸 가지고 있는 건가?
+---
+- Envoy
+  - Envoy is an open source edge and service proxy, designed for cloud native application
+- Envoy Demo
+  - Requirement: set up a component that can receive a standard http request
+  - Technically, this is called a `Reverse Proxy`
+    - Difference: here, the client knows they have called the proxy
+    - The client thinks the results have come from the proxy
+- [Istio proxy의 작동원리](https://brunch.co.kr/@growthminder/84)
+  - `$ kubectl label namespace <namespace> istio-injection=enabled` 을 실행 시 webhook을 통해 `istiod`에 `/inject api`를 호출
+  - `istiod` 는 파드에 프록시 컨테이너와 init 컨테이너를 주입
+  - init 컨테이너는 서비스 컨테이너가 생성되기 전에 먼저 작업 수행
+    - istio-iptables 명령어 ( 네트워크 트래픽을 제어하기 위한 iptable 작업)
+    - 해당 iptable 은 파드 내에서 동작하며, 프록시가 트래픽을 가로채기 위한 설정
+  - init 컨테이너를 통해 iptable에 규칙을 추가한 후 istio-proxy 컨테이너 생성
+    - 
