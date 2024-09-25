@@ -89,4 +89,9 @@ istioctl kube-inject \
 
 https://coffeewhale.com/kubernetes/admission-control/2021/04/28/opa1/
 
+자동으로 Injection 하는 방법에 대한 글
+https://jimmysong.io/en/blog/istio-pod-process-lifecycle/
+
+---
+
 참고 내용: https://www.solo.io/blog/istios-networking-in-depth/
