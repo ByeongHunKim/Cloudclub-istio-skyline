@@ -1,12 +1,13 @@
+![istio.png](resources%2Fistio.png)
+
 <p align="center">
     <h1 align="center">
         Cloud Club
     </h1>
+    <h1 align="center">
+        Istio study season 1
+    </h1>
 </p>
-
-# Istio study season 1
-
-## [Reference](https://www.udemy.com/course/istio-hands-on-for-kubernetes/)
 
 ## [week1](https://github.com/users/ByeongHunKim/projects/7/views/1?pane=issue&itemId=79215937)
 - **warm up**
@@ -23,21 +24,15 @@
 - **Telemetry**
 
 ## [week4](https://github.com/users/ByeongHunKim/projects/7/views/1?pane=issue&itemId=79378924)
-- **Traffic Management**
-- **Load Balancing**
+
 
 ## [week5](https://github.com/users/ByeongHunKim/projects/7/views/1?pane=issue&itemId=79378932)
-- **Gateways**
-- **Dark Releases**
 
 ## [week6](https://github.com/users/ByeongHunKim/projects/7/views/1?pane=issue&itemId=79378940)
-- **Fault Injection**
-- **Circuit Breaking**
-- **Mutual TLS**
+
 
 ## [week7](https://github.com/users/ByeongHunKim/projects/7/views/1?pane=issue&itemId=79378944)
-- **Customizing and installing Istio with Istioctl**
-- **Upgrading Istio**
+
 
 ## [week8](https://github.com/users/ByeongHunKim/projects/7/views/1?pane=issue&itemId=79378947)
 - **study season1 presentation**
