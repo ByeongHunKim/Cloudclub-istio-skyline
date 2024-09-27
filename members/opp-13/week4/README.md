@@ -13,6 +13,10 @@ IPv4의 경우 iptables를 사용하지만 IPv6는 ip6tables, ARP는 arptables, 
 
 UFW같은 방화벽의 경우 iptables를 제어하여 패킷을 필터링한다.
 
+Match Extensions 및 Target Extensions은 생략함
+
+https://linux.die.net/man/8/iptables
+
 ## 2. iptables의 명령어 구조
 
 <pre>
@@ -184,21 +188,21 @@ https://velog.io/@koo8624/Linux-A-Deep-dive-into-iptables-and-Netfilter
 
 <pre>
 <code>
--A, --append [chain] [rule-specification]
+-A, --append chain rule-specification
 [chain]의 마지막에 [rule-specification] 추가
 
--D, --delete [chain] [rule-specification]
+-D, --delete chain rule-specification
 [chain]의 규칙 중 [rule-specification]과 일치하는 규칙 삭제
 
--D, --delete [chain] [rulenum]
+-D, --delete chain rulenum
 [chain]의 규칙 순서 중 [rulenum]에 해당하는 규칙 삭제
 참고로 [rulenum]는 0이 아닌 1부터 시작한다.
 
--I, --insert [chain] [rulenum] [rule-specification]
+-I, --insert chain [rulenum] rule-specification
 [chain]의 [rulenum]의 순서에 [rule-specification]를 추가
 #예를 들어 [rulenum]가 1이면 제일 상단에 추가됨
 
--R, --replace [chain] [rulenum] [rule-specification]
+-R, --replace chain rulenum rule-specification
 [chain]의 [rulenum]의 순서에 있는 규칙을 [rule-specification]로 변경
 #만약 출발지/목적지 ip가 여러개이면 해당 명령어는 실패한다.
 
@@ -216,7 +220,7 @@ https://velog.io/@koo8624/Linux-A-Deep-dive-into-iptables-and-Netfilter
 -Z, --zero [chain]
 [chain]의 모든 packet과 byte 카운터를 초기화(해당 규칙을 지난 packet 개수 및 byte)
 
--N, --new-chain [chain]
+-N, --new-chain chain
 사용자 정의 체인을 생성한다. 이 경우 기존 체인의 이름과 곂치면 안된다.
 
 -X, --delete-chain [chain]
@@ -225,12 +229,12 @@ https://velog.io/@koo8624/Linux-A-Deep-dive-into-iptables-and-Netfilter
 #삭제하려는 체인의 규칙은 모두 비어있어야 한다.
 #삭제하려는 체인은 다른 체인에서 참조되면 안된다.
 
--P, --policy [chain] [target]
+-P, --policy chain target
 [chain]의 정책을 지정된 [target]으로 설정한다. 
 #이 때 [chain]은 기본 제공된(사용자 정의가 아닌) 체인만 설정 가능하다.
 #체인은 [target]이 될 수 없다.
 
--E, --rename-chain [old-chain] [new-chain]
+-E, --rename-chain old-chain new-chain
 [old-chain]의 이름을 [new-chain]으로 수정한다.
 #테이블의 구조에는 영향이 가지 않는다.
 
@@ -239,10 +243,62 @@ https://velog.io/@koo8624/Linux-A-Deep-dive-into-iptables-and-Netfilter
 </code>
 </pre>
 
+### 2.4 [PARAMETERS]
+[rule-specification]을 구성하는데 사용한다.
+
+<pre>
+<code>
+-p, --protocol [!] protocol
+규칙 또는 확인할 packet의 프로토콜이다.
+tcp, udp, icmp 또는 all 중 하나일 수 있으며 /etc/protocols에 있는 이름 또한 가능하다. 
+#!를 사용하여 의미를 반전시킬 수 있다.
+#숫자로 [protocol]을 지정할 수 있다. 이때 0은 전체 프로토콜을 의미한다.
+#기본값은 0이다.
+
+-s, --source [!] address[/mask]
+출발지를 의미한다. [address]는 네트워크 이름, 호스트 이름(권장 x), ip주소(이 경우 mask 값도 포함 가능)을 넣을 수 있다.
+#!를 사용하여 의미를 반전시킬 수 있다.
+#--src도 가능하다.
+
+-d, --destination [!] address[/mask]
+목적지를 의미한다 문법은 -s와 같다.
+#--dst도 된다.
+
+-j, --jump target
+규칙의 [target]을 정의한다. 즉 packet이 규칙에 맞을 경우 할일을 정의한다.
+[target]은 사용자 정의 체인(이 규칙이 있는 체인 제외), 패킷의 운명을 즉시 결정하는 특수 내장 타겟 중 하나, 또는 확장일 수 있다.
+#규칙에서 이 옵션과 -g 옵션이 사용되지 않는 경우 패킷에는 영향이 가지 않지만 규칙의 카운터는 증가한다.
+
+-g, --goto chain
+-j옵션과 비슷하지만 RETURN 시 현재 체인에서 처리하지 않고 -j를 호출한 체인에서 계속된다.
+
+-i, --in-interface [!] name
+packet이 수신된 인터페이스의 이름이다(INPUT, FORWARD, PREROUTING 체인에만 한정). 
+#!를 사용하여 의미를 반전시킬 수 있다.
+#인터페이스 이름이 +로 끝나면 이 이름으로 시작하는 모든 인터페이스를 의미한다. (eth+ -> eth0, eth1 ...)
+#만약 이 옵션이 생략되면 모든 인터페이스의 이름으로 설정된다.
+
+-o, --out-interface [!] name
+packet이 전송될 인터페이스의 이름이다(FORWARD, OUTPUT, POSTROUTING 체인에만 한정). 
+#-i와 사용법은 같다.
+
+[!] -f, --fragment
+단편화된 packet의 2번째 조각 이후의 packet만 참조한다. 
+#!인자는 단편화되지 않은 packet 그리고 단편화된 packet의 첫번째 조각의 패킷에 대해 처리합니다.
+#단편화된 패킷의 2번째 조각 부터는 포트(출발지/목적지) 및 ICMP 패킷인지 알 수 없는 경우가 있습니다.
+
+-c, --set-counters PKTS BYTES
+INSERT, APPEND, REPLACE 명령 중 규칙의 packet과 byte counters를 초기화 할 수 있게 합니다. 
+</code>
+</pre>
 
 
-
+<br /><br />
 
 참조
 
 https://linux.die.net/man/8/iptables
+
+
+<br /><br />
+
