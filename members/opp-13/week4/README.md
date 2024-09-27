@@ -410,7 +410,8 @@ https://github.com/torvalds/linux/blob/master/net/ipv4/ip_output.c#L317
 
 ### 3.2 체인
 
-위에서 테이블 별 거치는 체인을 언급한적이 있다. 
+[위에서 테이블 별 거치는 체인을 언급한적이 있다.](https://github.com/ByeongHunKim/Cloudclub-istio-skyline/tree/feature/opp-13/week4/members/opp-13/week4#%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%B3%84-%EA%B1%B0%EC%B9%98%EB%8A%94-%EC%B2%B4%EC%9D%B8)
+
 따라서 위의 Netfilter Hook으로 체인이 트리거 되면 설정된 각 체인을 거치며 알맞은 규칙을 탐색 후 맞는 부분이 있으면 해당 규칙을 적용하게 된다.
 
 예를 들어 PREROUTING 체인이 트리거 되면 PREROUTING 체인의 테이블인 raw, mangle, nat(DNAT) 테이블을 차례로 거치며 규칙을 위에서 아래로 탐색한다. 탐색 중 규칙에 부합하는 경우가 있을 때 그 규칙에 맞는 처리를 하게 된다.
