@@ -34,9 +34,9 @@
 
 ## 스터디 진행 방식
 
-- 주간 미팅을 통한 학습 내용 공유 및 토론
-- GitHub Issues를 활용한 질문 및 토론
-- Wiki를 통한 학습 내용 정리 및 공유
+- [Project](https://github.com/users/ByeongHunKim/projects/7)를 기반으로 주간 미팅을 통한 학습 내용 공유 및 토론
+- [GitHub Issues](https://github.com/ByeongHunKim/Cloudclub-istio-skyline/issues)를 활용한 질문 및 토론
+- [Wiki](https://github.com/ByeongHunKim/Cloudclub-istio-skyline/wiki)를 통한 학습 내용 정리 및 공유
 
 ## Pull Request 규칙 ( Optional )
 
