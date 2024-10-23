@@ -368,5 +368,7 @@ Envoy는 크게 3종류의 THread를 사용한다.
 
 [여러 스레드 레벨](https://jbluke.tistory.com/106)
 
+[Envoy Thread 관련 글](https://cla9.tistory.com/212)
+
 <br /><br />
 
