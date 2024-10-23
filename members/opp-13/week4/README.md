@@ -448,3 +448,6 @@ Chain POSTROUTING (policy ACCEPT 31981 packets, 4403K bytes)
 </pre>
 
 <img src="https://velog.velcdn.com/images/koo8624/post/6354d79a-b2f5-4eaf-ad54-f0db6abaf962/image.png" width="80%"/>
+
+
+<img src="https://stuffphilwrites.com/wp-content/uploads/2024/05/FW-IDS-iptables-Flowchart-v2024-05-22.png" width="80%"/>
