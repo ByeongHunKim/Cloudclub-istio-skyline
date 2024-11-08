@@ -1,0 +1,65 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-cluster
+  region: ap-northeast-1
+  version: "1.29"
+  tags:
+    Environment: "Staging"
+addons:
+  - name: vpc-cni
+    version: latest
+  - name: coredns
+    version: latest
+  - name: kube-proxy
+    version: latest
+iam:
+  withOIDC: true
+vpc:
+  id:
+  subnets:
+    public:
+      ap-northeast-1a:
+        id:
+        name: "eks-subnet-public1-ap-northeast-1a"
+      ap-northeast-1c:
+        id:
+        name: "eks-subnet-public2-ap-northeast-1c"
+      ap-northeast-1d:
+        id:
+        name: "eks-subnet-public3-ap-northeast-1d"
+managedNodeGroups:
+  - name: manage-group
+    instanceType: m4.xlarge
+    desiredCapacity: 3
+    minSize: 3
+    maxSize: 5
+    privateNetworking: false
+    volumeSize: 20
+    ssh:
+      allow: true
+      publicKeyName: "common"
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        ebs: true
+        albIngress: true
+    tags:
+      eksctl.io/nodegroup-name: "manage-group"
+  - name: service-group
+    instanceType: m4.xlarge
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 5
+    privateNetworking: false
+    volumeSize: 20
+    ssh:
+      allow: true
+      publicKeyName: "common"
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        ebs: true
+        albIngress: true
+    tags:
+      eksctl.io/nodegroup-name: "service-group"
