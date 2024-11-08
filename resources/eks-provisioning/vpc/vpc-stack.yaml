@@ -1,0 +1,118 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create VPC with public subnets in Tokyo region for EKS
+Parameters:
+  Region:
+    Type: String
+    Default: ap-northeast-1
+    Description: AWS Tokyo Region
+Resources:
+  VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: '10.1.0.0/16'
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: eks-vpc
+
+  InternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key: Name
+          Value: eks-igw
+
+  AttachGateway:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: eks-rtb-public
+
+  PublicRoute:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref InternetGateway
+
+  # Public Subnets
+  PublicSubnet1:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: '10.1.0.0/20'
+      AvailabilityZone: !Sub '${Region}a'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: eks-subnet-public1-ap-northeast-1a
+        - Key: kubernetes.io/role/elb
+          Value: 1
+
+  PublicSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: '10.1.16.0/20'
+      AvailabilityZone: !Sub '${Region}c'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: eks-subnet-public2-ap-northeast-1c
+        - Key: kubernetes.io/role/elb
+          Value: 1
+
+  PublicSubnet3:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: '10.1.32.0/20'
+      AvailabilityZone: !Sub '${Region}d'
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: eks-subnet-public3-ap-northeast-1d
+        - Key: kubernetes.io/role/elb
+          Value: 1
+
+  # Route Table Associations for Public Subnets
+  PublicSubnet1RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet2RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet3RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref PublicSubnet3
+      RouteTableId: !Ref PublicRouteTable
+
+Outputs:
+  VPCId:
+    Description: 'VPC ID'
+    Value: !Ref VPC
+  PublicSubnet1Id:
+    Description: 'Public Subnet 1 (AZ-a) ID'
+    Value: !Ref PublicSubnet1w
+  PublicSubnet2Id:
+    Description: 'Public Subnet 2 (AZ-c) ID'
+    Value: !Ref PublicSubnet2
+  PublicSubnet3Id:
+    Description: 'Public Subnet 3 (AZ-d) ID'
+    Value: !Ref PublicSubnet3
