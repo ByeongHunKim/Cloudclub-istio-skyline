@@ -233,3 +233,15 @@ eksctl create cluster -f eksctl-cluster-config.yaml
 - EC2 -> 키페어
 - common
    - worker node ssh 접속 시 사용
+
+# kubeconfig 설정 변경
+```bash
+aws eks --region ap-northeast-1 update-kubeconfig --name eks-cluster --alias cloudclub-cluster
+
+k get nodes
+#NAME                                             STATUS   ROLES    AGE   VERSION
+#ip-10-1-1-173.ap-northeast-1.compute.internal    Ready    <none>   21h   v1.29.8-eks-a737599
+#ip-10-1-20-137.ap-northeast-1.compute.internal   Ready    <none>   21h   v1.29.8-eks-a737599
+#ip-10-1-25-216.ap-northeast-1.compute.internal   Ready    <none>   21h   v1.29.8-eks-a737599
+#ip-10-1-46-53.ap-northeast-1.compute.internal    Ready    <none>   21h   v1.29.8-eks-a737599
+```
