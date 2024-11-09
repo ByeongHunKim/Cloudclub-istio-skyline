@@ -245,3 +245,8 @@ k get nodes
 #ip-10-1-25-216.ap-northeast-1.compute.internal   Ready    <none>   21h   v1.29.8-eks-a737599
 #ip-10-1-46-53.ap-northeast-1.compute.internal    Ready    <none>   21h   v1.29.8-eks-a737599
 ```
+
+# alb controller
+
+# istio
+
